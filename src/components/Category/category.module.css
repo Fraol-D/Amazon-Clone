@@ -1,0 +1,44 @@
+/* category.module.css */
+.category {
+  height: 350px;
+  width: 270px; /* Reduced the width for better spacing */
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 10px; /* Added margin for spacing between cards */
+}
+
+.category img {
+  width: 100%;
+  object-fit: contain;
+  max-height: 200px; /* Reduced the max-height for better spacing */
+}
+
+.category a {
+  text-decoration: none;
+  color: rgb(35, 35, 35);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category h2,
+.category p {
+  padding: 5px;
+  margin: 5px 0; /* Adjusted margin for better spacing */
+}
+
+.category p {
+  font-size: 12px;
+  font-weight: bold;
+  color: rgb(9, 132, 209);
+}
+
+.category__container {
+  position: relative;
+  margin-top: -270px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* Added gap for spacing between cards */
+  place-items: center;
+  z-index: 1;
+}
