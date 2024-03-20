@@ -5,6 +5,7 @@ import { auth } from "./Utility/firebase.js";
 import { DataContext } from "./components/DataProvider/DataProvider.jsx";
 
 function App() {
+  // eslint-disable-next-line no-unused-vars
   const [{ user }, dispatch] = useContext(DataContext);
 
   useEffect(() => {
