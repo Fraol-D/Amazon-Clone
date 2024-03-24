@@ -5,6 +5,11 @@ import { DataContext } from "../../components/DataProvider/DataProvider";
 import ProductCard from "../../components/Product/ProductCard";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import CurrencyFormat from "../../components/CurrencyFormat/CurrencyFormat";
+import { axiosInstance } from "../../Api/axios";
+import { SyncLoader } from "react-spinners";
+import { useNavigate } from "react-router-dom";
+
+// const app = require("../../../../amazon-api/index");
 
 function Payment() {
   const [{ user, basket }] = useContext(DataContext);
@@ -18,23 +23,58 @@ function Payment() {
   }, 0);
 
   const [cardError, setCardError] = useState(null);
+  const [processing, setProcessing] = useState(false);
+
   const stripe = useStripe();
   const elements = useElements();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     e?.error?.message ? setCardError(e?.error?.message) : setCardError("");
   };
 
-  const handlePayment = (e) => {
-    e.preventDefault()
-//1.
-    //backend || functions ---> contact to the client secret
+  const handlePayment = async (e) => {
+    e.preventDefault();
 
-    //2. client side(react side confirmation)
+    try {
+      setProcessing(true);
+      //1. backend ---> contact to the client secret
+      const response = await axiosInstance({
+        method: "POST",
+        url: `/payment/create?total=${total * 100}`,
+      });
 
-    //3. after the configuration --> order firestore databse save, clear basket.
+      // console.log(response.data);
+      const clientSecret = response.data?.clientSecret;
 
-  }
+      //2. client side(react side confirmation)
+      const { paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+          card: elements.getElement(CardElement),
+        },
+      });
+
+      // console.log(confirmation);
+
+      //3. after the configuration --> order database save, clear basket.
+      // await app
+      //   .collection("users")
+      //   .doc(user.uid)
+      //   .collection("orders")
+      //   .doc(paymentIntent.id)
+      //   .set({
+      //     basket: basket,
+      //     amount: paymentIntent.amount,
+      //     created: paymentIntent.created,
+      //   });
+
+      setProcessing(false);
+      navigate("/orders", {state:{msg:"you have placed a new order"}})
+    } catch (error) {
+      console.log(error);
+      setProcessing(false);
+    }
+  };
 
   return (
     <Layout>
@@ -87,7 +127,16 @@ function Payment() {
                       | <CurrencyFormat amount={total} />
                     </span>
                   </div>
-                  <button>Pay Now</button>
+                  <button type="submit">
+                    {processing ? (
+                      <div className={classes.loading}>
+                        <SyncLoader color="gray" size={4} />
+                        <p>Please Wait ...</p>
+                      </div>
+                    ) : (
+                      "Pay Now"
+                    )}
+                  </button>
                 </div>
               </form>
             </div>
