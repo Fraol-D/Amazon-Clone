@@ -21,9 +21,20 @@ function Payment() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const handelChange = (e) => {
+  const handleChange = (e) => {
     e?.error?.message ? setCardError(e?.error?.message) : setCardError("");
   };
+
+  const handlePayment = (e) => {
+    e.preventDefault()
+//1.
+    //backend || functions ---> contact to the client secret
+
+    //2. client side(react side confirmation)
+
+    //3. after the configuration --> order firestore databse save, clear basket.
+
+  }
 
   return (
     <Layout>
@@ -60,13 +71,13 @@ function Payment() {
           <h3>Payment methods</h3>
           <div className={classes.payment__card__container}>
             <div className={classes.payment__details}>
-              <form action="">
+              <form onSubmit={handlePayment}>
                 {/* error */}
                 {cardError && (
                   <small style={{ color: "red" }}>{cardError}</small>
                 )}
                 {/* card element */}
-                <CardElement onChange={handelChange} />
+                <CardElement onChange={handleChange} />
 
                 {/* price */}
                 <div className={classes.payment__price}>

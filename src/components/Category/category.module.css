@@ -42,3 +42,14 @@
   place-items: center;
   z-index: 1;
 }
+
+/* FIX THE RESPONSIVENESS ISSUES */
+
+/* @media screen and (max-width:768px) {
+  .category__container{
+    flex-direction: column;
+  }
+  .category__wrapper{
+    flex-direction: column;
+  }
+} */
