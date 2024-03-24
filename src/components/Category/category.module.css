@@ -37,19 +37,10 @@
   position: relative;
   margin-top: -270px;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  max-width: 1600px;
   gap: 20px; /* Added gap for spacing between cards */
   place-items: center;
   z-index: 1;
 }
 
-/* FIX THE RESPONSIVENESS ISSUES */
-
-/* @media screen and (max-width:768px) {
-  .category__container{
-    flex-direction: column;
-  }
-  .category__wrapper{
-    flex-direction: column;
-  }
-} */

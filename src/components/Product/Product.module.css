@@ -50,7 +50,8 @@
 
 .products_container {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  max-width: 1600px;
 
   max-width: 100%;
   gap: 50px;
