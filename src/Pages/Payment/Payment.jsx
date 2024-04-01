@@ -9,7 +9,7 @@ import { axiosInstance } from "../../Api/axios";
 import { SyncLoader } from "react-spinners";
 import { useNavigate } from "react-router-dom";
 
-// const app = require("../../../../amazon-api/index");
+// const app = require("../../../../amazon-api/index.js");
 
 function Payment() {
   const [{ user, basket }] = useContext(DataContext);
